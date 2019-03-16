@@ -21,6 +21,12 @@ export class HelpCommand implements ICommandHandler {
     const topic = _.first(command.subtext!.split(' ')) as string;
     const users = await this.topicStore.getUsersByTopic(topic);
     // Send topic request to mentors
+    if (users.length === 0)
+      return {
+        text:
+          'Unfortunately there are no mentors for that topic right now. Use `/hacky list` to find a list of valid topics, or check back later!',
+        responseUrl: command.response_url
+      };
     await Promise.all(
       users.map(user => {
         const dmResponse: ICommandResponse = {
