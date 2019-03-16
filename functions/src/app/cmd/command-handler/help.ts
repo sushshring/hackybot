@@ -1,10 +1,10 @@
-import * as _ from "lodash";
-import { TopicStore } from "../../db/topic-store";
-import { ICommandResponse } from "../../model/command-response";
-import { ICommandResponder } from "../command-responder";
-import { SlackDmCommandResponder } from "../command-responder/slack-dm-command-responder";
-import { ISubCommand } from "../slack-command/hacky/hacky-command-handler";
-import { ICommandHandler } from "./index";
+import * as _ from 'lodash';
+import { TopicStore } from '../../db/topic-store';
+import { ICommandResponse } from '../../model/command-response';
+import { ICommandResponder } from '../command-responder';
+import { SlackDmCommandResponder } from '../command-responder/slack-dm-command-responder';
+import { ISubCommand } from '../slack-command/hacky/hacky-command-handler';
+import { ICommandHandler } from './index';
 
 export class HelpCommand implements ICommandHandler {
   private topicStore: TopicStore;
@@ -18,7 +18,7 @@ export class HelpCommand implements ICommandHandler {
   public async handle(command: ISubCommand): Promise<ICommandResponse> {
     console.log(command);
     // Get the topic for help
-    const topic = _.first(command.subtext!.split(" ")) as string;
+    const topic = _.first(command.subtext!.split(' ')) as string;
     const users = await this.topicStore.getUsersByTopic(topic);
     // Send topic request to mentors
     await Promise.all(
@@ -28,22 +28,22 @@ export class HelpCommand implements ICommandHandler {
           users: [user],
           attachments: [
             {
-              text: _.tail(command.subtext!.split(" ")).join(" "),
+              text: _.tail(command.subtext!.split(' ')).join(' '),
               callback_id: command.user_id,
-              attachment_type: "default",
-              color: "#3AA3E3",
+              attachment_type: 'default',
+              color: '#3AA3E3',
               actions: [
                 {
-                  name: "help",
+                  name: 'help',
                   text: "Let's help!",
-                  type: "button",
-                  value: "help"
+                  type: 'button',
+                  value: 'help'
                 },
                 {
-                  name: "help",
+                  name: 'help',
                   text: "I can't :(",
-                  type: "button",
-                  value: "nah"
+                  type: 'button',
+                  value: 'nah'
                 }
               ]
             }

@@ -1,8 +1,8 @@
-import { ICommand } from "../../model/command";
-import { ICommandResponse } from "../../model/command-response";
-import { SlackClient } from "../../slack/slack-client";
-import { IRespondCommand } from "../slack-command/hacky/hacky-command-handler";
-import { ICommandHandler } from "./index";
+import { ICommand } from '../../model/command';
+import { ICommandResponse } from '../../model/command-response';
+import { SlackClient } from '../../slack/slack-client';
+import { IRespondCommand } from '../slack-command/hacky/hacky-command-handler';
+import { ICommandHandler } from './index';
 
 export class RespondQueryCommandHandler implements ICommandHandler {
   private slackClient: SlackClient;
@@ -13,7 +13,7 @@ export class RespondQueryCommandHandler implements ICommandHandler {
 
   public async handle(command: IRespondCommand): Promise<ICommandResponse> {
     console.log(command);
-    if (command.actions[0].value === "help") {
+    if (command.actions[0].value === 'help') {
       await this.slackClient.slack.chat.postMessage({
         channel: command.user!.id,
         text: `${command.original_message.text} from <@${
@@ -23,13 +23,13 @@ export class RespondQueryCommandHandler implements ICommandHandler {
       });
     } else {
       await this.slackClient.slack.chat.postMessage({
-        text: "Okay. Maybe next time :hacky:",
+        text: 'Okay. Maybe next time :hacky:',
         as_user: true,
         channel: command.user.id
       });
     }
     return {
-      text: "Opening a conversation now..."
+      text: 'Opening a conversation now...'
     };
   }
 

@@ -11,5 +11,4 @@ export class HackyCommandResponder implements ICommandResponder {
     console.log(result.data);
     return undefined;
   }
-
 }
